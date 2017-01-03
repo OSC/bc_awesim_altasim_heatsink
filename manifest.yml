@@ -1,0 +1,16 @@
+---
+name: HeatSinkSIM
+description: |-
+  **HeatSinkSIM** solves the heat transfer problem for a vertically oriented, plate
+  fin heat sink operating under natural convection. Heat transfer is analyzed
+  using conduction, convection and radiation.
+
+  Two levels of analyses are available:
+
+  - Level 1 analyzes a range of heat sink designs to identify optimum heat sink
+    designs
+  - Level 2 provides a detailed analysis of the optimum heat sink design and is
+    automatically recommended when predicted temperatures approach component
+    operating limits.
+category: AltaSim Technologies
+url: /pun/sys/vncsim/%{app_token}/sessions

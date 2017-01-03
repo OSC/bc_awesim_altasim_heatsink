@@ -1,0 +1,21 @@
+{
+  "name": "bc_awesim_altasim_heatsink",
+  "authors": [
+    "Jeremy Nicklas <jnicklas@osc.edu>"
+  ],
+  "description": "Batch Connect - AweSim AltaSim HeatSinkSim",
+  "main": "",
+  "license": "MIT",
+  "homepage": "https://github.com/OSC/bc_awesim_altasim_heatsink",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bc_comsol_server": "git://github.com/OSC/bc_comsol_server.git#0.0.x"
+  }
+}
