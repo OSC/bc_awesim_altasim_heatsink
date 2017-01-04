@@ -1,5 +1,8 @@
 # Batch Connect - AweSim AltaSim HeatSinkSim
 
+![GitHub Release](https://img.shields.io/github/release/osc/bc_awesim_altasim_heatsink.svg)
+![GitHub License](https://img.shields.io/github/license/osc/bc_awesim_altasim_heatsink.svg)
+
 A VNCSim app used for launching AltaSim's HeatSinkSim app within a COMSOL
 Server ([bc_comsol_server](https://github.com/OSC/bc_comsol_server)).
 
