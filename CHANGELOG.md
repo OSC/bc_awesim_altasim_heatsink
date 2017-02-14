@@ -1,5 +1,7 @@
 ## Unreleased
 
+## 0.0.2 (2017-02-14)
+
 Features:
 
   - use latest version of COMSOL Server
