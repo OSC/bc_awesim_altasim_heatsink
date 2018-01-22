@@ -23,7 +23,7 @@ setup_env
 # Start COMSOL Server
 #
 
-<%- prefs_dir = Pathname.new(ENV["HOME"]).join(".comsol", "awesim_altasim_heatsink") -%> # backwards compatible
+<%- prefs_dir = Pathname.new(ENV["HOME"]).join(".comsol", "awesim_altasim_heatsink") -%>
 mkdir -p "<%= prefs_dir %>"
 
 # Copy over default server preferences if it does not exist
@@ -31,9 +31,11 @@ mkdir -p "<%= prefs_dir %>"
 touch "<%= server_prefs_file %>"
 echo "Setting server preferences..."
 set -x
+sed 's/^ \{2\}//' > "<%= server_prefs_file %>" << EOL
 <%- server_prefs.each do |k, v| -%>
-sed -n -i -e '/^<%= k %>=/!p' -e '$a<%= k %>=<%= v %>' "<%= server_prefs_file %>"
+  <%= k %>=<%= v %>
 <%- end -%>
+EOL
 { set +x; } 2>/dev/null
 
 # Copy over COMSOL Server apps
