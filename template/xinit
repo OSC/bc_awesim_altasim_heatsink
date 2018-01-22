@@ -1,3 +1,0 @@
-# Wrap COMSOL Server xinit
-COMSOL_SERVER_ROOT="${ROOT}/bc_comsol_server/template"
-source "${COMSOL_SERVER_ROOT}/xinit"

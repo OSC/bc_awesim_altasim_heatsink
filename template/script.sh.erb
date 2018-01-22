@@ -1,0 +1,95 @@
+#!/usr/bin/env bash
+
+<%-
+  app_root = Pathname.new("/users/PZS0645/wiag/comsol/applications/altasim/heatsink")
+
+  server_prefs = {
+    "server.general.showbuiltinapplications" => "off",
+    "application.server.enable" => "off",
+    "application.server.allowexternalprocess" => "on"
+  }
+-%>
+
+# Load the required environment
+setup_env () {
+  module purge
+  module load torque
+  module load comsol/52au3_server
+  export PATH="<%= session.staged_root.join("bin") %>:${PATH}"
+}
+setup_env
+
+#
+# Start COMSOL Server
+#
+
+<%- prefs_dir = Pathname.new(ENV["HOME"]).join(".comsol", "awesim_altasim_heatsink") -%> # backwards compatible
+mkdir -p "<%= prefs_dir %>"
+
+# Copy over default server preferences if it does not exist
+<%- server_prefs_file = prefs_dir.join("server.prefs") -%>
+touch "<%= server_prefs_file %>"
+echo "Setting server preferences..."
+set -x
+<%- server_prefs.each do |k, v| -%>
+sed -n -i -e '/^<%= k %>=/!p' -e '$a<%= k %>=<%= v %>' "<%= server_prefs_file %>"
+<%- end -%>
+{ set +x; } 2>/dev/null
+
+# Copy over COMSOL Server apps
+<%- apps_dir = prefs_dir.join("applications") -%>
+mkdir -p "<%= apps_dir %>"
+set -x
+ln -s "<%= app_root %>/"*.mph{,app} "<%= apps_dir %>"
+symlinks -d "<%= apps_dir %>"
+{ set +x; } 2>/dev/null
+
+# Create output directory needed by HeatSinkSim
+mkdir -p "<%= prefs_dir.join("output") %>"
+
+# Generate batch script to run COMSOL
+# Requires to be supplied with COMSOL_COMMAND and COMSOL_INPUT
+export COMSOL_BATCH_SCRIPT="<%= session.staged_root.join("batch.sh") %>"
+(
+umask 077
+sed 's/^ \{2\}//' > "${COMSOL_BATCH_SCRIPT}" << EOL
+  #PBS -N ${PBS_JOBNAME}/run!
+  <%- unless context.bc_account.blank? -%>
+  #PBS -A <%= context.bc_account.strip %>
+  <%- end -%>
+  #PBS -o <%= session.staged_root.join("batch.\\$PBS_JOBID.log") %>
+  #PBS -j oe
+  #PBS -m be
+
+  # Setup environment
+  $(declare -f setup_env)
+  setup_env
+
+  # Launch called COMSOL command
+  set -x
+  \${COMSOL_COMMAND} -f <(cat "\${PBS_NODEFILE}" | uniq) -mpirsh rsh
+  { set +x; } 2>/dev/null
+
+  # Copy app when done
+  ln "\${COMSOL_INPUT}" "<%= apps_dir %>"
+EOL
+)
+
+# For debugging purposes output license server information
+echo "Output license information..."
+set -x
+lmutil lmstat -a
+{ set +x; } 2>/dev/null
+
+# Set working directory to home directory
+cd "${HOME}"
+
+# Launch COMSOL Server
+# NB: use -silent or the server will suspend itself
+echo "Starting up COMSOL Server..."
+set -x
+comsol server \
+  -serviceport ${port} \
+  -prefsdir "<%= prefs_dir %>" \
+  -silent \
+  -login never

@@ -1,9 +1,15 @@
 ---
-name: HeatSinkSIM
-description: |-
-  **HeatSinkSIM** solves the heat transfer problem for a vertically oriented, plate
-  fin heat sink operating under natural convection. Heat transfer is analyzed
-  using conduction, convection and radiation.
+name: HeatSinkSim
+category: Interactive Apps
+subcategory: Servers
+role: batch_connect
+description: |
+  This app will launch [COMSOL Server] 5.2a Update 3 on a shared node
+  with access to the following [AltaSim] app:
+
+  **HeatSinkSIM** solves the heat transfer problem for a vertically oriented,
+  plate fin heat sink operating under natural convection. Heat transfer is
+  analyzed using conduction, convection and radiation.
 
   Two levels of analyses are available:
 
@@ -12,5 +18,6 @@ description: |-
   - Level 2 provides a detailed analysis of the optimum heat sink design and is
     automatically recommended when predicted temperatures approach component
     operating limits.
-category: AltaSim Technologies
-url: /pun/sys/vncsim/%{app_token}/sessions
+
+  [COMSOL Server]: https://www.comsol.com/comsol-server
+  [AltaSim]: http://www.altasimtechnologies.com/
