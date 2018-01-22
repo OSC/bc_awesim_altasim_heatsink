@@ -1,7 +1,6 @@
 ---
 name: HeatSinkSim
-category: Interactive Apps
-subcategory: Servers
+category: AltaSim Technologies
 role: batch_connect
 description: |
   This app will launch [COMSOL Server] 5.2a Update 3 on a shared node
