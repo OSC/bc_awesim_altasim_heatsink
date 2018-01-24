@@ -3,64 +3,56 @@
 ![GitHub Release](https://img.shields.io/github/release/osc/bc_awesim_altasim_heatsink.svg)
 ![GitHub License](https://img.shields.io/github/license/osc/bc_awesim_altasim_heatsink.svg)
 
-A VNCSim app used for launching AltaSim's HeatSinkSim app within a COMSOL
-Server ([bc_comsol_server](https://github.com/OSC/bc_comsol_server)).
+An interactive app designed for AweSim that launches a COMSOL Server
+with access to AltaSim's HeatSinkSim app within a Quick batch job.
+
+## Prerequisites
+
+This Batch Connect app requires the following software be installed on the
+**compute nodes** that the batch job is intended to run on (**NOT** the
+OnDemand node):
+
+- [COMSOL Server](https://www.comsol.com/comsol-server) 5.2a Update 3 or
+  greater
+- Access to AltaSim's HeatSinkSim app
+
+**Optional** software:
+
+- [Lmod](https://www.tacc.utexas.edu/research-development/tacc-projects/lmod)
+  6.0.1+ or any other `module purge` and `module load <modules>` based CLI used
+  to load appropriate environments within the batch job before launching the
+  COMSOL Server.
+
+> **Warning:**
+>
+> Care must be taken when installing the COMSOL Server on your cluster such
+> that it has a proper Authentication module in place. We recommend setting up
+> the LDAP module for the local authentication of your users.
 
 ## Install
 
-1. Git clone this app in the desired location and go into the directory:
+Use Git to clone this app and checkout the desired branch/version you want to
+use:
 
-  ```sh
-  git clone <repo> bc_awesim_altasim_heatsink
+```sh
+scl enable git19 -- git clone <repo>
+cd <dir>
+scl enable git19 -- git checkout <tag/branch>
+```
 
-  cd bc_awesim_altasim_heatsink
-  ```
+You will not need to do anything beyond this as all necessary assets are
+installed. You will also not need to restart this app as it isn't a Passenger
+app.
 
-2. Checkout the version of the app you want to deploy:
+To update the app you would:
 
-  ```sh
-  git checkout <tag>
-  ```
+```sh
+cd <dir>
+scl enable git19 -- git fetch
+scl enable git19 -- git checkout <tag/branch>
+```
 
-3. This app requires the
-   [bc_comsol_server](https://github.com/OSC/bc_comsol_server) Bower asset, so
-   we will need a local copy of Bower:
-
-  ```sh
-  npm install bower
-  ```
-
-4. Install the Bower asset:
-
-  ```sh
-  node_modules/.bin/bower install
-  ```
-
-## Update
-
-1. Fetch the updated code:
-
-  ```sh
-  git fetch
-  ```
-
-2. Checkout the desired tag:
-
-  ```sh
-  git checkout <tag>
-  ```
-
-3. Update the Bower assets:
-
-  ```sh
-  node_modules/.bin/bower update --force
-  ```
-
-## Specification
-
-For a more detailed specification please see
-[bc_comsol_server](https://github.com/OSC/bc_comsol_server) as this app
-inherits from this asset.
+Again, you do not need to restart the app as it isn't a Passenger app.
 
 ## Contributing
 

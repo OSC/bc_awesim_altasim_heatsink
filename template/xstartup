@@ -1,5 +1,0 @@
-#!/bin/bash -l
-
-# Start up COMSOL Server
-COMSOL_SERVER_ROOT="${ROOT}/bc_comsol_server/template"
-ROOT="${COMSOL_SERVER_ROOT}" "${COMSOL_SERVER_ROOT}/xstartup"
