@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased]
 ### Changed
 - Now uses Owens nodes instead of Oakley.
+- Use area chart for launcher icon.
 
 ## [0.1.1] - 2018-03-12
 ### Changed
