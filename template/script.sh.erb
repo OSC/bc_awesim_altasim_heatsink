@@ -13,8 +13,8 @@
 # Load the required environment
 setup_env () {
   module purge
-  module use /usr/local/share/lmodfiles/project/ondemand
-  module load torque comsol/52au3_server
+  module use "${MODULEPATH_ROOT}/project/ondemand"
+  module load comsol/52au3_server
   export PATH="<%= session.staged_root.join("bin") %>:${PATH}"
 }
 setup_env
